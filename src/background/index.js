@@ -1,4 +1,5 @@
 import pptrActions from '../code-generator/pptr-actions'
+import datailActions from '../code-generator/datail-actions'
 import ctrl from '../models/extension-control-messages'
 import actions from '../models/extension-ui-actions'
 
@@ -34,6 +35,7 @@ class RecordingController {
         if (msg.action && msg.action === actions.CLEAN_UP) this.cleanUp()
         if (msg.action && msg.action === actions.PAUSE) this.pause()
         if (msg.action && msg.action === actions.UN_PAUSE) this.unPause()
+        if (msg.action && msg.action === actions.CLOSE_STEP) this.closeStep(msg.value)
       })
     })
   }
@@ -74,19 +76,19 @@ class RecordingController {
         contexts: ['all']
       })
 
-      chrome.contextMenus.create({
-        id: this._menuId + this._menuOptions.SCREENSHOT,
-        title: 'Take Screenshot (Ctrl+Shift+A)',
-        parentId: this._menuId,
-        contexts: ['all']
-      })
+      // chrome.contextMenus.create({
+      //   id: this._menuId + this._menuOptions.SCREENSHOT,
+      //   title: 'Take Screenshot (Ctrl+Shift+A)',
+      //   parentId: this._menuId,
+      //   contexts: ['all']
+      // })
 
-      chrome.contextMenus.create({
-        id: this._menuId + this._menuOptions.SCREENSHOT_CLIPPED,
-        title: 'Take Screenshot Clipped (Ctrl+Shift+S)',
-        parentId: this._menuId,
-        contexts: ['all']
-      })
+      // chrome.contextMenus.create({
+      //   id: this._menuId + this._menuOptions.SCREENSHOT_CLIPPED,
+      //   title: 'Take Screenshot Clipped (Ctrl+Shift+S)',
+      //   parentId: this._menuId,
+      //   contexts: ['all']
+      // })
 
       // add the handlers
 
@@ -140,6 +142,11 @@ class RecordingController {
     })
   }
 
+  closeStep (value) {
+    console.debug('closeStep')
+    this.handleMessage({ selector: undefined, value, action: datailActions.CLOSE_STEP })
+  }
+
   recordCurrentUrl (href) {
     if (!this._hasGoto) {
       console.debug('recording goto* for:', href)
@@ -182,7 +189,7 @@ class RecordingController {
     if (msg.control === ctrl.EVENT_RECORDER_STARTED) chrome.browserAction.setBadgeText({ text: this._badgeState })
     if (msg.control === ctrl.GET_VIEWPORT_SIZE) this.recordCurrentViewportSize(msg.coordinates)
     if (msg.control === ctrl.GET_CURRENT_URL) this.recordCurrentUrl(msg.href)
-    if (msg.control === ctrl.GET_SCREENSHOT) this.recordScreenshot(msg.value)
+    // if (msg.control === ctrl.GET_SCREENSHOT) this.recordScreenshot(msg.value)
   }
 
   handleNavigation ({ frameId }) {
@@ -196,23 +203,23 @@ class RecordingController {
   handleMenuInteraction (info, tab) {
     console.debug('context menu clicked')
     switch (info.menuItemId) {
-      case (this._menuId + this._menuOptions.SCREENSHOT):
-        this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_MODE)
-        break
-      case (this._menuId + this._menuOptions.SCREENSHOT_CLIPPED):
-        this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_CLIPPED_MODE)
-        break
+      // case (this._menuId + this._menuOptions.SCREENSHOT):
+      //   this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_MODE)
+      //   break
+      // case (this._menuId + this._menuOptions.SCREENSHOT_CLIPPED):
+      //   this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_CLIPPED_MODE)
+      //   break
     }
   }
 
   handleKeyCommands (command) {
     switch (command) {
-      case actions.TOGGLE_SCREENSHOT_MODE:
-        this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_MODE)
-        break
-      case actions.TOGGLE_SCREENSHOT_CLIPPED_MODE:
-        this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_CLIPPED_MODE)
-        break
+      // case actions.TOGGLE_SCREENSHOT_MODE:
+      //   this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_MODE)
+      //   break
+      // case actions.TOGGLE_SCREENSHOT_CLIPPED_MODE:
+      //   this.toggleScreenShotMode(actions.TOGGLE_SCREENSHOT_CLIPPED_MODE)
+      //   break
     }
   }
 

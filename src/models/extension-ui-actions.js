@@ -5,5 +5,6 @@ export default {
   STOP: 'STOP',
   CLEAN_UP: 'CLEAN_UP',
   PAUSE: 'PAUSE',
-  UN_PAUSE: 'UN_PAUSE'
+  UN_PAUSE: 'UN_PAUSE',
+  CLOSE_STEP: 'CLOSE_STEP'
 }

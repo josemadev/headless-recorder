@@ -10,8 +10,9 @@
           <img src="/images/icon_wait.png">.</li>
         <li>Click <strong>Pause</strong> when you want to navigate without recording anything.
           Hit <strong>Resume</strong> to continue recording.</li>
+        <li>Click <strong>Next step</strong> when you want to start a new step.</li>
       </ul>
-      <h4>Controls</h4>
+      <!-- <h4>Controls</h4>
       <p>While recording, right click to show extra controls that trigger various functions like recording screenshots.
         <img src="/images/context_menu.png" alt="context menu" class="w-100">
       </p>
@@ -26,7 +27,7 @@
       into a file and run as a standard node program</p>
       <pre>
 npm install puppeteer playwright
-node my-script.js</pre>
+node my-script.js</pre> -->
     </div>
     <div class="help-footer text-muted">
       powered by

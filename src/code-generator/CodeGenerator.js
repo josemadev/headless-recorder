@@ -1,6 +1,7 @@
 import domEvents from './dom-events-to-record'
 import Block from './Block'
 import pptrActions from './pptr-actions'
+import datailActions from './datail-actions'
 
 export const defaults = {
   wrapAsync: true,
@@ -79,6 +80,9 @@ export default class CodeGenerator {
           break
         case pptrActions.SCREENSHOT:
           this._blocks.push(this._handleScreenshot(value))
+          break
+        case datailActions.CLOSE_STEP:
+          this._blocks.push(this._handleStopStep(value, i === events.length - 1))
           break
       }
     }
@@ -181,6 +185,12 @@ export default class CodeGenerator {
     if (this._options.waitForNavigation) {
       block.addLine({type: pptrActions.NAVIGATION, value: `await navigationPromise`})
     }
+    return block
+  }
+
+  _handleStopStep (name, finish) {
+    const block = new Block(this._frameId)
+    block.addLine({type: datailActions.CLOSE_STEP, value: `await datail.closeStep('${name}', ${finish})`})
     return block
   }
 

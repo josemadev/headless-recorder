@@ -2,7 +2,7 @@
   <div class="options">
     <div class="container">
       <div class="header">
-        Headless Recorder Options
+        Datail Headless Recorder Options
         <small class="saving-badge text-muted" v-show="saving">
           Saving...
         </small>
@@ -13,13 +13,13 @@
             Code Recorder settings
           </h4>
           <div class="settings-block-main">
-            <div class="settings-group">
+            <!-- <div class="settings-group">
               <label class="settings-label">custom data attribute</label>
               <input id="options-code-dataAttribute" type="text" v-model.trim="options.code.dataAttribute" @change="save" placeholder="your custom data-* attribute">
               <small>Define an attribute that we'll attempt to use when selecting the elements, i.e "data-custom". This is handy
                 when React or Vue based apps generate random class names.</small>
               <small class="settings-warning">⚠️ When data attribute is set, it will take precedence from over other any selector (even ID)</small>
-            </div>
+            </div> -->
             <div class="settings-group">
               <label class="settings-label">set key code</label>
               <div class="settings-block">
@@ -35,7 +35,7 @@
             Code Generator settings
           </h4>
           <div class="settings-block-main">
-            <div class="settings-group">
+            <!-- <div class="settings-group">
               <label>
                 <input id="options-code-wrapAsync" type="checkbox" v-model="options.code.wrapAsync" @change="save">
                 Wrap code in async function
@@ -46,7 +46,7 @@
                 <input id="options-code-headless" type="checkbox" v-model="options.code.headless" @change="save">
                 Set <code>headless</code> in puppeteer launch options
               </label>
-            </div>
+            </div> -->
             <div class="settings-group">
               <label>
                 <input id="options-code-waitForNavigation" type="checkbox" v-model="options.code.waitForNavigation" @change="save">
@@ -65,27 +65,12 @@
                 Add blank lines between code blocks
               </label>
             </div>
-            <div class="settings-group">
+            <!-- <div class="settings-group">
               <label>
                 <input id="options-code-showPlaywrightFirst" type="checkbox" v-model="options.code.showPlaywrightFirst" @change="save">
                 Show Playwright tab first
               </label>
-            </div>
-          </div>
-        </div>
-        <div class="settings-block">
-          <h4 class="settings-block-title">
-            Extension settings
-          </h4>
-          <div class="settings-block-main">
-            <div class="settings-group">
-              <label>
-                <input id="options-telemetry" type="checkbox" v-model="options.extension.telemetry" @change="save">
-                Allow recording of usage telemetry
-              </label>
-              <br>
-              <small>We only record clicks for basic product development, no website content or input data. Data is never, ever shared with 3rd parties.</small>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -105,7 +90,7 @@
   const defaults = {
     code,
     extension: {
-      telemetry: true
+      telemetry: false
     }
   }
 

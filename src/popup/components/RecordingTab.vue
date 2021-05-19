@@ -5,9 +5,6 @@
         <img src="/images/Desert.svg" alt="desert" width="78px">
         <h3>No recorded events yet</h3>
         <p class="text-muted">Click record to begin</p>
-        <div class="nag-cta" v-show="!isRecording">
-          <a href="https://checklyhq.com/headless-recorder" target="_blank">Puppeteer Recorder is now <strong>Headless Recorder</strong> and supports Playwright →</a>
-        </div>
       </div>
       <div class="events" v-show="isRecording">
         <p class="text-muted text-center loading" v-show="liveEvents.length === 0">Waiting for events</p>
@@ -27,6 +24,7 @@
   </div>
 </template>
 <script>
+import datailActions from '../../code-generator/datail-actions'
   export default {
     name: 'RecordingTab',
     props: {
@@ -37,6 +35,7 @@
       parseEventValue (event) {
         if (event.action === 'viewport*') return `width: ${event.value.width}, height: ${event.value.height}`
         if (event.action === 'goto*') return event.href
+        if (event.action === datailActions.CLOSE_STEP) return event.value
         if (event.action === 'navigation*') return ''
       }
     }

@@ -2,7 +2,7 @@
   <div id="headless-recorder" class="recorder">
     <div class="header">
       <a href="#" @click="goHome">
-        Headless recorder <span class="text-muted"><small>{{version}}</small></span>
+        Datail Headless recorder <span class="text-muted"><small>{{version}}</small></span>
       </a>
       <div class="left">
         <div class="recording-badge" v-show="isRecording">
@@ -21,12 +21,33 @@
       <div class="tabs" v-show="!showHelp">
         <RecordingTab :code="code" :is-recording="isRecording" :live-events="liveEvents" v-show="!showResultsTab"/>
         <div class="recording-footer" v-show="!showResultsTab">
-          <button class="btn btn-sm" @click="toggleRecord" :class="isRecording ? 'btn-danger' : 'btn-primary'">
-            {{recordButtonText}}
-          </button>
-          <button class="btn btn-sm btn-primary btn-outline-primary" @click="togglePause" v-show="isRecording">
-            {{pauseButtonText}}
-          </button>
+          <div v-show="!savingClose && !savingStop">
+            <button class="btn btn-sm btn-primary" @click="toggleSavingClose" v-show="isRecording && !canStop">
+              {{closeStepButtonText}}
+            </button>
+            <button class="btn btn-sm btn-primary" @click="toggleRecord" v-show="!isRecording">
+              {{recordButtonText}}
+            </button>
+            <button class="btn btn-sm btn-danger" @click="toggleRecord" v-show="isRecording && canStop">
+              {{recordButtonText}}
+            </button>
+            <button class="btn btn-sm btn-primary btn-outline-primary" @click="togglePause" v-show="isRecording">
+              {{pauseButtonText}}
+            </button>
+          </div>
+          
+          <div v-show="savingClose || savingStop">
+            <button class="btn btn-sm btn-primary btn-outline-primary" @click="cancel" v-show="isRecording">
+              {{cancelButtonText}}
+            </button>
+            <input type="text" class="input" style="padding:5px; width: 120px" v-model="stepName" placeholder="Step name">
+            <button class="btn btn-sm btn-primary" @click="closeStep" v-show="savingClose">
+              {{closeStepButtonText}}
+            </button>
+            <button class="btn btn-sm btn-danger" @click="toggleRecord" v-show="savingStop">
+              {{recordButtonText}}
+            </button>
+          </div>
           <a href="#" @click="showResultsTab = true" v-show="code">view code</a>
           <checkly-badge v-if="!isRecording"></checkly-badge>
         </div>
@@ -57,6 +78,9 @@ export default {
     components: { ResultsTab, RecordingTab, HelpTab, ChecklyBadge },
     data () {
       return {
+        stepName: '',
+        savingStop: false,
+        savingClose: false,
         code: '',
         codeForPlaywright: '',
         options: {},
@@ -90,6 +114,17 @@ export default {
       this.bus = this.$chrome.extension.connect({ name: 'recordControls' })
     },
     methods: {
+      cancel (){
+        this.savingClose = false
+        this.savingStop = false
+      },
+      toggleSavingClose () {
+        this.stepName = ''
+        this.savingClose = ! this.savingClose
+      },
+      toggleSavingStop () {
+        this.savingStop = ! this.savingStop
+      },
       toggleRecord () {
         if (this.isRecording) {
           this.stop()
@@ -109,6 +144,19 @@ export default {
         }
         this.storeState()
       },
+      closeStep () {
+        if (!this.canStop) {
+          this.bus.postMessage({ action: actions.CLOSE_STEP, value: this.stepName, selector: this.stepName })
+          this.storeState()
+          setTimeout(()=>{
+            this.$chrome.storage.local.get(['recording', 'options'], ({ recording }) => {
+              console.debug('loaded recording', recording)
+              this.liveEvents = recording
+            })
+            this.toggleSavingClose()
+          }, 300);
+        }
+      },
       start () {
         this.trackEvent('Start')
         this.cleanUp()
@@ -116,9 +164,10 @@ export default {
         this.bus.postMessage({ action: actions.START })
       },
       stop () {
+        this.bus.postMessage({ action: actions.CLOSE_STEP, value: this.stepName })
         this.trackEvent('Stop')
         console.debug('stop recorder')
-        this.bus.postMessage({ action: actions.STOP })
+        this.bus.postMessage({ action: actions.STOP, value: this.stepName })
 
         this.$chrome.storage.local.get(['recording', 'options'], ({ recording, options }) => {
           console.debug('loaded recording', recording)
@@ -144,6 +193,8 @@ export default {
         this.recording = this.liveEvents = []
         this.code = ''
         this.codeForPlaywright = ''
+        this.savingStop = false
+        this.savingClose = false
         this.showResultsTab = this.isRecording = this.isPaused = false
         this.storeState()
       },
@@ -221,8 +272,17 @@ export default {
       pauseButtonText () {
         return this.isPaused ? 'Resume' : 'Pause'
       },
+      closeStepButtonText () {
+        return 'Close Step'
+      },
+      cancelButtonText () {
+        return 'Cancel'
+      },
       copyLinkText () {
         return this.isCopying ? 'copied!' : 'copy to clipboard'
+      },
+      canStop () {
+        return (this.liveEvents.length > 0 && this.liveEvents[this.liveEvents.length-1].action === actions.CLOSE_STEP)
       }
     }
 }

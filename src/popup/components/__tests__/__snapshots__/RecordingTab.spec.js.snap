@@ -25,21 +25,6 @@ exports[`RecordingTab.vue it has the correct pristine / empty state 1`] = `
       >
         Click record to begin
       </p>
-       
-      <div
-        class="nag-cta"
-      >
-        <a
-          href="https://checklyhq.com/headless-recorder"
-          target="_blank"
-        >
-          Puppeteer Recorder is now 
-          <strong>
-            Headless Recorder
-          </strong>
-           and supports Playwright →
-        </a>
-      </div>
     </div>
      
     <div
@@ -86,22 +71,6 @@ exports[`RecordingTab.vue it has the correct recording DOM events state 1`] = `
       >
         Click record to begin
       </p>
-       
-      <div
-        class="nag-cta"
-        style="display: none;"
-      >
-        <a
-          href="https://checklyhq.com/headless-recorder"
-          target="_blank"
-        >
-          Puppeteer Recorder is now 
-          <strong>
-            Headless Recorder
-          </strong>
-           and supports Playwright →
-        </a>
-      </div>
     </div>
      
     <div
@@ -177,22 +146,6 @@ exports[`RecordingTab.vue it has the correct recording Puppeteer custom events s
       >
         Click record to begin
       </p>
-       
-      <div
-        class="nag-cta"
-        style="display: none;"
-      >
-        <a
-          href="https://checklyhq.com/headless-recorder"
-          target="_blank"
-        >
-          Puppeteer Recorder is now 
-          <strong>
-            Headless Recorder
-          </strong>
-           and supports Playwright →
-        </a>
-      </div>
     </div>
      
     <div
@@ -322,22 +275,6 @@ exports[`RecordingTab.vue it has the correct waiting for events state 1`] = `
       >
         Click record to begin
       </p>
-       
-      <div
-        class="nag-cta"
-        style="display: none;"
-      >
-        <a
-          href="https://checklyhq.com/headless-recorder"
-          target="_blank"
-        >
-          Puppeteer Recorder is now 
-          <strong>
-            Headless Recorder
-          </strong>
-           and supports Playwright →
-        </a>
-      </div>
     </div>
      
     <div

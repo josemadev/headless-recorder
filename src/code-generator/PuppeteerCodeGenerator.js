@@ -2,7 +2,7 @@ import pptrActions from './pptr-actions'
 import Block from './Block'
 import CodeGenerator from './CodeGenerator'
 
-const importPuppeteer = `const puppeteer = require('puppeteer');\n`
+// const importPuppeteer = `const puppeteer = require('puppeteer');\n`
 
 const header = `const browser = await puppeteer.launch()
 const page = await browser.newPage()`
@@ -26,7 +26,8 @@ export default class PuppeteerCodeGenerator extends CodeGenerator {
   }
 
   generate (events) {
-    return importPuppeteer + this._getHeader() + this._parseEvents(events) + this._getFooter()
+    // return importPuppeteer + this._getHeader() + this._parseEvents(events) + this._getFooter()
+    return this._parseEvents(events)
   }
 
   _handleViewport (width, height) {

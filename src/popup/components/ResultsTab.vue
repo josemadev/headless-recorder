@@ -1,13 +1,5 @@
 <template>
   <div class="tab results-tab">
-    <div class="tabs">
-      <button v-for="tab in tabs" :key="tab" class="tabs__action" v-bind:class="{'selected': activeTab === tab}" @click.prevent="changeTab(tab)">
-        <span v-if="tab === 'playwright'">🎭</span>
-        <img v-if="tab === 'puppeteer'" src="/images/puppeteer.png" width="16" />
-        <span class="tabs__action--text">{{ tab }}</span>
-      </button>
-    </div>
-
     <div class="content">
       <pre v-if="code()" v-highlightjs="code()">
         <code class="javascript"></code>
@@ -43,7 +35,8 @@ export default {
   data () {
     return {
       activeTab: TYPE.PUPPETEER,
-      tabs: [TYPE.PUPPETEER, TYPE.PLAYWRIGHT]
+      // tabs: [TYPE.PUPPETEER, TYPE.PLAYWRIGHT]
+      tabs: [TYPE.PUPPETEER]
     }
   },
   mounted() {

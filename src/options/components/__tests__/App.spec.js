@@ -54,26 +54,4 @@ describe('App.vue', () => {
         expect(wrapper.vm.$data.options.code.keyCode).toBe(16)
       })
   })
-
-  test('it stores and loads the user\'s edited options', () => {
-    const options = { code: { wrapAsync: true } }
-    const mocks = { $chrome: createChromeLocalStorageMock(options) }
-    const wrapper = mount(App, { mocks, localVue })
-    return wrapper.vm.$nextTick()
-      .then(() => {
-        const checkBox = wrapper.find('#options-code-wrapAsync')
-        checkBox.trigger('click')
-        expect(wrapper.find('.saving-badge').text()).toEqual('Saving...')
-        return wrapper.vm.$nextTick()
-      })
-      .then(() => {
-        // we need to simulate a page reload
-        wrapper.vm.load()
-        return wrapper.vm.$nextTick()
-      })
-      .then(() => {
-        const checkBox = wrapper.find('#options-code-wrapAsync')
-        return expect(checkBox.element.checked).toBeFalsy()
-      })
-  })
 })

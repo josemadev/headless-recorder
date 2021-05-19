@@ -12,7 +12,7 @@ exports[`App.vue it has the correct pristine / empty state 1`] = `
       href="#"
     >
       
-      Headless recorder 
+      Datail Headless recorder 
       <span
         class="text-muted"
       >
@@ -75,22 +75,80 @@ exports[`App.vue it has the correct pristine / empty state 1`] = `
       <div
         class="recording-footer"
       >
-        <button
-          class="btn btn-sm btn-primary"
-        >
+        <div>
+          <button
+            class="btn btn-sm btn-primary"
+            style="display: none;"
+          >
+            
+            Close Step
           
-          Record
-        
-        </button>
+          </button>
+           
+          <button
+            class="btn btn-sm btn-primary"
+          >
+            
+            Record
+          
+          </button>
+           
+          <button
+            class="btn btn-sm btn-danger"
+            style="display: none;"
+          >
+            
+            Record
+          
+          </button>
+           
+          <button
+            class="btn btn-sm btn-primary btn-outline-primary"
+            style="display: none;"
+          >
+            
+            Pause
+          
+          </button>
+        </div>
          
-        <button
-          class="btn btn-sm btn-primary btn-outline-primary"
+        <div
           style="display: none;"
         >
+          <button
+            class="btn btn-sm btn-primary btn-outline-primary"
+            style="display: none;"
+          >
+            
+            Cancel
           
-          Pause
-        
-        </button>
+          </button>
+           
+          <input
+            class="input"
+            placeholder="Step name"
+            style="padding: 5px; width: 120px;"
+            type="text"
+          />
+           
+          <button
+            class="btn btn-sm btn-primary"
+            style="display: none;"
+          >
+            
+            Close Step
+          
+          </button>
+           
+          <button
+            class="btn btn-sm btn-danger"
+            style="display: none;"
+          >
+            
+            Record
+          
+          </button>
+        </div>
          
         <a
           href="#"
